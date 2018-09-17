@@ -1158,5 +1158,17 @@ label ch30_reset:
 
     ## should we drink coffee?
     $ _mas_startupCoffeeLogic()
+
+    ## should we reset birthday
+    python:
+        if (
+                persistent._mas_bday_need_to_reset_bday 
+                and not mas_isMonikaBithday()
+            ):
+            bday_ev = mas_getEV("mas_bday_pool_happy_bday")
+            if bday_ev:
+                bday_ev.conditional="mas_isMonikaBirthday()"
+                bday_ev.action=EV_ACT_UNLOCK
+                persistent._mas_bday_need_to_reset_bday = False
             
     return
